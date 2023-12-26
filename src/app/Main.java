@@ -1,6 +1,5 @@
 package app;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import db.AchievementJDBC;
@@ -72,12 +71,6 @@ public class Main {
 		jdbc.add(marathonCompleted);
 		jdbc.add(complexPuzzleSolved);
 		jdbc.add(legendBecame);
-
-		
-		List<Achievement> list = jdbc.getAll();		
-		for(Achievement a : list) {
-			System.out.println(a.toString());
-		}
 	}
 
 }

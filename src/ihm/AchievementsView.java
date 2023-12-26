@@ -1,16 +1,15 @@
 package ihm;
 
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
@@ -20,53 +19,34 @@ import controller.AchievementsController;
 import db.AchievementJDBC;
 import objects.Achievement;
 
-public class AchievementsView extends JFrame {
+public class AchievementsView extends JPanel {
 	
 	private AchievementsController controller;
 	private JPanel listAchievements;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AchievementsView frame = new AchievementsView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public AchievementsView() {
 		
 		this.controller = new AchievementsController(this);
 		
-		///// WINDOW \\\\\
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
-		
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(15, 150, 15, 150));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		setBorder(new EmptyBorder(15, 150, 15, 150));
+		setLayout(new BorderLayout(0, 0));
 		
 		
 		///// MAIN PANEL \\\\\
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new BorderLayout(0, 0));
-		contentPane.add(panelMain, BorderLayout.CENTER);
+		add(panelMain, BorderLayout.CENTER);
 		
 		
 		/// TITLE PANEL \\\
 		JPanel panelTitle = new JPanel();
 		panelMain.add(panelTitle, BorderLayout.NORTH);
 		
-		// Bouton add
-		JButton btnNewButton = new JButton("+");
-		btnNewButton.setName("Add_");
-		btnNewButton.addActionListener(controller);
-		panelTitle.add(btnNewButton);
+		// Button add
+		JButton btnAdd = new JButton("+");
+		btnAdd.setName("Add_");
+		btnAdd.addActionListener(controller);
+		panelTitle.add(btnAdd);
 		
 		
 		/// TABLE ACHIEVEMENTS \\\			
@@ -85,7 +65,12 @@ public class AchievementsView extends JFrame {
 	}
 	
 	
-	private void fillTable() {
+	public void fillTable() {
+		
+		// Remove all children if there is
+		for(Component c : listAchievements.getComponents()) {
+			listAchievements.remove(c);
+		}
 		
 		// All achievements list
 		AchievementJDBC jdbc = new AchievementJDBC();
@@ -95,6 +80,9 @@ public class AchievementsView extends JFrame {
 		for(Achievement a : list) {			
 			listAchievements.add(achievementPanel(a));
 		}			
+		
+		validate();
+		repaint();
 	}
 	
 	

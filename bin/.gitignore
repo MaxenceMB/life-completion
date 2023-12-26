@@ -1,5 +1,3 @@
-/objects/
-/db/
-/ihm/
+/controller/
 /app/
-/components/
+/ihm/

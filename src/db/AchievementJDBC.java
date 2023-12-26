@@ -150,7 +150,7 @@ public class AchievementJDBC implements AchievementDAO {
 			
 			st.executeUpdate();
 			
-			System.out.println(String.format("Achievement [%d] deleted.", a.getId()));
+			System.out.println(String.format("Achievement [%s] deleted.", a.getId()));
 			a = null;
 			res = true;
 			
