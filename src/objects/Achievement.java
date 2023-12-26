@@ -2,16 +2,17 @@ package objects;
 
 import java.time.LocalDateTime;
 
+import ihm.Constants;
+
 public class Achievement {
 	
-	///// ATTRIBUTES \\\\\
-	private int id;						// ID in Database
-	
-	private AchievementType type;   	// Type of the achievement (Binary or Completion)
+	///// ATTRIBUTES \\\\\		
+	private String id;
 	
 	private String  title;				// Title of the achievement
 	private String  description;		// Description of the achievement
-	private Level   level;				// Level (Rarity, Difficulty) of the achievement
+	private AchievementType  type;   	// Type of the achievement (Binary or Completion)
+	private AchievementLevel level;		// Level (Rarity, Difficulty) of the achievement
 	private boolean completed;			// True if completed
 	
 	private LocalDateTime createDate;	// Date of creation
@@ -23,45 +24,47 @@ public class Achievement {
 	
 	///// CONSTRUCTORS \\\\\
 	// Binary
-	public Achievement(String title, String desc, Level level) {
-		this.type = AchievementType.BINARY;
-		
+	public Achievement(String title, String desc, AchievementLevel level) {		
 		this.title       = title;
 		this.description = desc;
+		this.type        = AchievementType.BINARY;
 		this.level       = level;
 		
 		this.completed = false;
 		
 		this.createDate   = LocalDateTime.now();
-		this.completeDate = null;
+		this.completeDate = LocalDateTime.MIN;
 		
 		this.stepsNeeded = 0;
 		this.stepsDone = 0;
+		
+		this.id = genId();
 	}
 	
 	// Completion
-	public Achievement(String title, String desc, Level level, int stepsNeeded) {
-		this.type = AchievementType.COMPLETION;
-		
+	public Achievement(String title, String desc, AchievementLevel level, int stepsNeeded) {		
 		this.title       = title;
 		this.description = desc;
+		this.type        = AchievementType.COMPLETION;
 		this.level       = level;
 		
 		this.completed = false;
 		
 		this.createDate   = LocalDateTime.now();
-		this.completeDate = null;
+		this.completeDate = LocalDateTime.MIN;
 		
 		this.stepsNeeded = stepsNeeded;
 		this.stepsDone = 0;
+		
+		this.id = genId();
 	}
 	
 	// Full (DB)
-	public Achievement(int id, AchievementType type, String title, String desc, Level level, boolean completed, LocalDateTime createDate, LocalDateTime completeDate, int stepsNeeded, int stepsDone) {
+	public Achievement(String id, String title, String desc, AchievementType type, AchievementLevel level, boolean completed, LocalDateTime createDate, LocalDateTime completeDate, int stepsNeeded, int stepsDone) {
 		this.id           = id;
-		this.type         = type;
 		this.title        = title;
 		this.description  = desc;
+		this.type         = type;
 		this.level        = level;
 		this.completed    = completed;
 		this.createDate   = createDate;
@@ -72,6 +75,17 @@ public class Achievement {
 	
 	
 	///// FUNCTIONS \\\\\
+	// Generate ID
+	private String genId() {
+		String id = "";
+		
+		id += this.type.toString().substring(0, 3);
+		id += "_";
+		id += this.createDate.getNano();
+		
+		return id;
+	}
+	
 	// Complete
 	public void complete() {
 		if(!this.completed) {
@@ -94,7 +108,7 @@ public class Achievement {
 				complete();
 			}
 		} else {
-			System.out.println("This achievement doesn't have ant steps.");
+			System.out.println("This achievement doesn't have any steps.");
 		}
 	}
 	
@@ -102,7 +116,7 @@ public class Achievement {
 		if(this.type == AchievementType.COMPLETION) {
 			return this.stepsNeeded - this.stepsDone;
 		} else {
-			System.out.println("This achievement doesn't have ant steps.");
+			System.out.println("This achievement doesn't have any steps.");
 			return -1;
 		}
 	}
@@ -110,14 +124,14 @@ public class Achievement {
 	
 	///// GETTERS AND SETTERS \\\\\
 	// ID
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	// Title
 	public String getTitle() {
 		return title;
@@ -137,11 +151,11 @@ public class Achievement {
 	}
 
 	// Level
-	public Level getLevel() {
+	public AchievementLevel getLevel() {
 		return level;
 	}
 
-	public void setLevel(Level level) {
+	public void setLevel(AchievementLevel level) {
 		this.level = level;
 	}
 
@@ -155,11 +169,11 @@ public class Achievement {
 	}
 	
 	// Dates
-	public LocalDateTime getCompleteDate() {
+	public LocalDateTime getCompletedDate() {
 		return completeDate;
 	}
 
-	public void setCompleteDate(LocalDateTime date) {
+	public void setCompletedDate(LocalDateTime date) {
 		this.completeDate = date;
 	}
 	
@@ -214,20 +228,19 @@ public class Achievement {
 	}
 	
 	public String toDetailedString() {
-		return String.format("ACHIEVEMENT [%d] \n"
+		return String.format("ACHIEVEMENT \n"
 				           + "    Title = %s \n"
 				           + "     Desc = %s \n"
 				           + "     Type = %s \n"
 				           + "    Level = %s \n"
 				           + "Completed = %s \n"
 				           + "Created the %s \n",
-				           this.id,
 				           this.title,
 				           this.description,
 				           (this.type.toString().equals(AchievementType.BINARY.toString())) ? AchievementType.BINARY.toString() : AchievementType.COMPLETION.toString() + "(" + this.stepsDone + "/" + this.stepsNeeded + ")",
 				           this.level.toString(),
-				           (this.completed) ? "Completed (" + this.completeDate.format(Constants.dateFormat) + ")" : "Not completed", 
-						   this.createDate.format(Constants.dateFormat));
+				           (this.completed) ? "Completed (" + this.completeDate.format(Constants.showDateFormat) + ")" : "Not completed", 
+						   this.createDate.format(Constants.showDateFormat));
 	}
 
 }

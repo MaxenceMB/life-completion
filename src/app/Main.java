@@ -1,65 +1,82 @@
 package app;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import db.JDBCAchievement;
-
+import db.AchievementJDBC;
 import objects.Achievement;
-import objects.Level;
+import objects.AchievementLevel;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Achievement test1 = new Achievement("A 1", "This is an achievement test.", Level.BRONZE);
-		Achievement test2 = new Achievement("Achiement test 2", "This is an achievement test.", Level.SILVER, 5);
-					test2.stepDone(2);
-		Achievement test3 = new Achievement("Achievem 3", "This is an achievement test.", Level.GOLD);
-					test3.complete();
-		Achievement test4 = new Achievement("A seesffes1", "This is an achievement test.", Level.BRONZE);
-		Achievement test5 = new Achievement("efsqefesfsefsfes test ", "This is an achievement test.", Level.SILVER, 5);
-					test5.stepDone(5);
-		Achievement test6 = new Achievement("aaaaaaaaaaaa 3", "This is an achievement test.", Level.GOLD);
-					test6.complete();
+	public static void main(String[] args) throws InterruptedException {		
+		AchievementJDBC jdbc = new AchievementJDBC();
 		
-		JDBCAchievement jdbc = new JDBCAchievement();
-		jdbc.add(test1);
-		jdbc.add(test2);
-		jdbc.add(test3);
-		jdbc.add(test4);
-		jdbc.add(test5);
-		jdbc.add(test6);
+		Achievement startingPoint = new Achievement("Starting Point", "Reached the starting point", AchievementLevel.BRONZE);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement nextLevel = new Achievement("Next Level", "Advanced to the next level", AchievementLevel.SILVER, 10);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement prestigiousStatus = new Achievement("Prestigious Status", "Attained a prestigious status", AchievementLevel.GOLD);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement masteredSkill = new Achievement("Mastered Skill", "Mastered a skill", AchievementLevel.SILVER);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement milestoneAccomplished = new Achievement("Milestone Accomplished", "Accomplished a milestone", AchievementLevel.BRONZE, 20);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement overcomeChallenge = new Achievement("Overcome Challenge", "Overcame a challenge", AchievementLevel.GOLD);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement newHeightReached = new Achievement("New Height Reached", "Reached a new height", AchievementLevel.SILVER);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement secretUnlocked = new Achievement("Secret Unlocked", "Unlocked a secret", AchievementLevel.BRONZE);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement difficultTaskCompleted = new Achievement("Difficult Task Completed", "Completed a difficult task", AchievementLevel.GOLD, 15);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement hiddenKnowledgeDiscovered = new Achievement("Hidden Knowledge Discovered", "Discovered hidden knowledge", AchievementLevel.SILVER);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement performanceExcellence = new Achievement("Performance Excellence", "Excelled in performance", AchievementLevel.BRONZE, 25);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement formidableFoeConquered = new Achievement("Formidable Foe Conquered", "Conquered a formidable foe", AchievementLevel.SILVER);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement marathonCompleted = new Achievement("Marathon Completed", "Completed a marathon", AchievementLevel.GOLD);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement complexPuzzleSolved = new Achievement("Complex Puzzle Solved", "Solved a complex puzzle", AchievementLevel.BRONZE);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		Achievement legendBecame = new Achievement("Legend Became", "Became a legend", AchievementLevel.GOLD, 30);
+		TimeUnit.MILLISECONDS.sleep(1);
+
+		jdbc.add(startingPoint);
+		jdbc.add(nextLevel);
+		jdbc.add(prestigiousStatus);
+		jdbc.add(masteredSkill);
+		jdbc.add(milestoneAccomplished);
+		jdbc.add(overcomeChallenge);
+		jdbc.add(newHeightReached);
+		jdbc.add(secretUnlocked);
+		jdbc.add(difficultTaskCompleted);
+		jdbc.add(hiddenKnowledgeDiscovered);
+		jdbc.add(performanceExcellence);
+		jdbc.add(formidableFoeConquered);
+		jdbc.add(marathonCompleted);
+		jdbc.add(complexPuzzleSolved);
+		jdbc.add(legendBecame);
+
 		
-		List<Achievement> list = new ArrayList<Achievement>();
-		
-		System.out.println("\n\nGET ALL");
-		list = jdbc.getAll();
+		List<Achievement> list = jdbc.getAll();		
 		for(Achievement a : list) {
-			System.out.println(a.toDetailedString());
-		}
-		
-		System.out.println("\n\nGET BINARY");
-		list = jdbc.getAllBinary();
-		for(Achievement a : list) {
-			System.out.println(a.toDetailedString());
-		}
-		
-		System.out.println("\n\nGET COMPLETION");
-		list = jdbc.getAllCompletion();
-		for(Achievement a : list) {
-			System.out.println(a.toDetailedString());
-		}
-		
-		System.out.println("\n\nGET COMPLETED");
-		list = jdbc.getAllCompleted();
-		for(Achievement a : list) {
-			System.out.println(a.toDetailedString());
-		}
-		
-		System.out.println("\n\nGET NOT COMPLETED");
-		list = jdbc.getAllNotCompleted();
-		for(Achievement a : list) {
-			System.out.println(a.toDetailedString());
+			System.out.println(a.toString());
 		}
 	}
 

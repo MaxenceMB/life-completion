@@ -23,16 +23,16 @@ public class CreateDB {
 			
 			// Table Achievement
 			stmt.executeUpdate("CREATE TABLE Achievement ("
-							 + "idAchievement INTEGER PRIMARY KEY AUTOINCREMENT, "
-							 + "type TEXT NOT NULL, "
+							 + "idAchievement TEXT UNIQUE PRIMARY KEY, "
 							 + "title TEXT UNIQUE NOT NULL, "
 							 + "description TEXT, "
-							 + "level TEXT, "
+							 + "type TEXT NOT NULL, "
+							 + "level TEXT NOT NULL, "
 							 + "completed INTEGER DEFAULT 0, "
 							 + "createDate TEXT NOT NULL, "
 							 + "completeDate TEXT, "
-							 + "stepsNeeded INTEGER DEFAULT NULL, "
-							 + "stepsDone INTEGER DEFAULT NULL);");
+							 + "stepsNeeded INTEGER DEFAULT 0, "
+							 + "stepsDone INTEGER DEFAULT 0);");
 			System.out.println("   OK - Create Table Achievement");
 			
 		} catch (SQLException e) {

@@ -1,10 +1,10 @@
 package objects;
 
-public enum Level {
+public enum AchievementLevel {
 	
 	BRONZE("Bronze"),
 	SILVER("Silver"),
 	GOLD("Gold");
 
-	private Level(String level) {}
+	private AchievementLevel(String level) {}
 }

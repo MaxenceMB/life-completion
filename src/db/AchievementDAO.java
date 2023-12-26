@@ -4,7 +4,7 @@ import java.util.List;
 
 import objects.Achievement;
 
-public interface DAOAchievement extends DAO<Achievement, Integer> {
+public interface AchievementDAO extends DAO<Achievement, String> {
 	
 	public List<Achievement> getAllBinary();
 	public List<Achievement> getAllCompletion();
