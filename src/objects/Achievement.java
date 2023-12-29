@@ -7,7 +7,7 @@ import ihm.Constants;
 public class Achievement {
 	
 	///// ATTRIBUTES \\\\\		
-	private String id;
+	private String id;					// ID of the achievement
 	
 	private String  title;				// Title of the achievement
 	private String  description;		// Description of the achievement
@@ -23,29 +23,11 @@ public class Achievement {
 	
 	
 	///// CONSTRUCTORS \\\\\
-	// Binary
-	public Achievement(String title, String desc, AchievementLevel level) {		
+	// New object
+	public Achievement(String title, String desc, AchievementLevel level, AchievementType type, int stepsNeeded) {
 		this.title       = title;
 		this.description = desc;
-		this.type        = AchievementType.BINARY;
-		this.level       = level;
-		
-		this.completed = false;
-		
-		this.createDate   = LocalDateTime.now();
-		this.completeDate = LocalDateTime.MIN;
-		
-		this.stepsNeeded = 0;
-		this.stepsDone = 0;
-		
-		this.id = genId();
-	}
-	
-	// Completion
-	public Achievement(String title, String desc, AchievementLevel level, int stepsNeeded) {		
-		this.title       = title;
-		this.description = desc;
-		this.type        = AchievementType.COMPLETION;
+		this.type        = type;
 		this.level       = level;
 		
 		this.completed = false;

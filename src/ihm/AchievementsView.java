@@ -27,6 +27,7 @@ public class AchievementsView extends JPanel {
 	public AchievementsView() {
 		
 		this.controller = new AchievementsController(this);
+		this.setName("Achievements");
 		
 		setBorder(new EmptyBorder(15, 150, 15, 150));
 		setLayout(new BorderLayout(0, 0));
@@ -44,7 +45,7 @@ public class AchievementsView extends JPanel {
 		
 		// Button add
 		JButton btnAdd = new JButton("+");
-		btnAdd.setName("Add_");
+		btnAdd.setName("Add");
 		btnAdd.addActionListener(controller);
 		panelTitle.add(btnAdd);
 		

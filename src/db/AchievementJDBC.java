@@ -267,5 +267,26 @@ public class AchievementJDBC implements AchievementDAO {
 		}
         return achievements;
 	}
+	
+	
+	public boolean isTitleTaken(String title) {
+		boolean taken = false;
+		try {
+			String req = "SELECT * "
+					   + "FROM Achievement "
+					   + "WHERE title = ?";
+			
+			PreparedStatement st = ConnectDB.getConnection().prepareStatement(req);
+			st.setString(1, title);
+			 
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				taken = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return taken;
+	}
 
 }

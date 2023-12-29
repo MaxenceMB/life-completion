@@ -8,33 +8,35 @@ import controller.MenuController;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 
 public class MenuView extends JPanel {
+	
+	private MenuController controller;
 
 	public MenuView() {
+		
+		this.controller = new MenuController(this);
+		this.setName("Menu");
 		
 		setBorder(new EmptyBorder(15, 50, 15, 50));
 		setLayout(new BorderLayout(0, 0));		
 		
 		///// MAIN PANEL \\\\\
 		JPanel panelMain = new JPanel();
-		panelMain.setLayout(new BorderLayout(0, 0));
-		add(panelMain, BorderLayout.CENTER);
+		panelMain.setLayout(new FlowLayout());
+		add(panelMain);
 		
-		
-		/// TITLE PANEL \\\
-		JPanel panelTitle = new JPanel();
-		panelMain.add(panelTitle, BorderLayout.NORTH);
+		// Button list
+		JButton btnAchievementsList = new JButton("Achievements list");
+		btnAchievementsList.addActionListener(controller);
+		btnAchievementsList.setName("Achievements");
+		panelMain.add(btnAchievementsList);
 		
 		// Button add
-		JButton btnAchievementsList = new JButton("Achievements list");
-		btnAchievementsList.addActionListener(new MenuController(this));
-		btnAchievementsList.setName("Achievements");
-		panelTitle.add(btnAchievementsList);
-		
-		/// TABLE ACHIEVEMENTS \\\			
-		JPanel testPanel = new JPanel();
-		testPanel.setBackground(Color.BLUE);
-		panelMain.add(testPanel, BorderLayout.CENTER);	
+		JButton btnNewAchievement = new JButton("Add an Achievement");
+		btnNewAchievement.addActionListener(controller);
+		btnNewAchievement.setName("New Achievement");
+		panelMain.add(btnNewAchievement);
 	}
 }
