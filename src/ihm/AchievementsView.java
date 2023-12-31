@@ -1,8 +1,10 @@
 package ihm;
 
 import java.awt.GridLayout;
+import java.util.Collections;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,13 +20,22 @@ import components.ListLayout;
 import controller.AchievementsController;
 import db.AchievementJDBC;
 import objects.Achievement;
+import objects.AchievementLevel;
+import objects.AchievementType;
 
 public class AchievementsView extends JPanel {
 	
 	private AchievementsController controller;
 	private JPanel listAchievements;
+	private JButton[] sortButtons = new JButton[4];
+	
+	private List<Achievement> list;
 
 	public AchievementsView() {
+
+		AchievementJDBC jdbc = new AchievementJDBC();
+		list =  jdbc.getAll();
+		Collections.shuffle(list);
 		
 		this.controller = new AchievementsController(this);
 		this.setName("Achievements");
@@ -42,6 +53,43 @@ public class AchievementsView extends JPanel {
 		/// TITLE PANEL \\\
 		JPanel panelTitle = new JPanel();
 		panelMain.add(panelTitle, BorderLayout.NORTH);
+		
+		// Order
+		JButton dateOrder = new JButton();
+		dateOrder.setName("DateOrder");
+		dateOrder.setText("Sort by date ▲");
+		dateOrder.setFocusable(false);
+		dateOrder.setBackground(Color.WHITE);
+		dateOrder.addActionListener(controller);
+		sortButtons[0] = dateOrder;
+		panelTitle.add(dateOrder);
+		
+		JButton typeOrder = new JButton();
+		typeOrder.setName("TypeOrder");
+		typeOrder.setText("Sort by type ▲");
+		typeOrder.setFocusable(false);
+		typeOrder.setBackground(Color.WHITE);
+		typeOrder.addActionListener(controller);
+		sortButtons[1] = typeOrder;
+		panelTitle.add(typeOrder);
+		
+		JButton levelOrder = new JButton();
+		levelOrder.setName("LevelOrder");
+		levelOrder.setText("Sort by level ▲");
+		levelOrder.setFocusable(false);
+		levelOrder.setBackground(Color.WHITE);
+		levelOrder.addActionListener(controller);
+		sortButtons[2] = levelOrder;
+		panelTitle.add(levelOrder);
+		
+		JButton completeOrder = new JButton();
+		completeOrder.setName("CompleteOrder");
+		completeOrder.setText("Sort by completion ▲");
+		completeOrder.setFocusable(false);
+		completeOrder.setBackground(Color.WHITE);
+		completeOrder.addActionListener(controller);
+		sortButtons[3] = completeOrder;
+		panelTitle.add(completeOrder);
 		
 		// Button add
 		JButton btnAdd = new JButton("+");
@@ -73,10 +121,6 @@ public class AchievementsView extends JPanel {
 			listAchievements.remove(c);
 		}
 		
-		// All achievements list
-		AchievementJDBC jdbc = new AchievementJDBC();
-		List<Achievement> list =  jdbc.getAll();
-		
 		// Make panel for each of them
 		for(Achievement a : list) {			
 			listAchievements.add(achievementPanel(a));
@@ -95,11 +139,17 @@ public class AchievementsView extends JPanel {
 		panel.setBackground(Color.LIGHT_GRAY);
 		
 		// Achievement image on left
+		Color borderColor = Color.WHITE;
+		     if(a.getLevel().equals(AchievementLevel.BRONZE)) borderColor = new Color(205, 127,  50);
+		else if(a.getLevel().equals(AchievementLevel.SILVER)) borderColor = new Color(210, 210, 210);
+		else if(a.getLevel().equals(AchievementLevel.GOLD))   borderColor = new Color(255, 215,   0);
+		
 		JLabel image = new JLabel("IMG");
 		image.setHorizontalAlignment(SwingConstants.CENTER);
-		image.setPreferredSize(new Dimension(80, 80));
+		image.setPreferredSize(new Dimension(90, 80));
 		image.setOpaque(true);
 		image.setBackground(Color.GRAY);
+		image.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0, borderColor));
 		panel.add(image, BorderLayout.WEST);
 		
 		// Main panel in the center
@@ -116,7 +166,8 @@ public class AchievementsView extends JPanel {
 		panelMain.add(panelInfos, BorderLayout.CENTER);
 				
 		// Achievement title
-		JLabel title = new JLabel(a.getTitle());
+		String titleText = (a.getType().equals(AchievementType.BINARY)) ? a.getTitle() : a.getTitle() + " (" + a.getStepsDone() + "/" + a.getStepsNeeded() + ")";
+		JLabel title = new JLabel(titleText);
 		title.setFont(Constants.FONT_ACHIEVEMENT_NAME);
 		panelInfos.add(title);
 					
@@ -163,5 +214,18 @@ public class AchievementsView extends JPanel {
 		panelButtons.add(delete);
 		
 		return panel;
+	}
+	
+	public List<Achievement> getList() {
+		return list;
+	}
+	
+	public void setList(List<Achievement> list) {
+		this.list = list;
+	}
+
+
+	public JButton[] getSortButtons() {
+		return sortButtons;
 	}
 }

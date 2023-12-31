@@ -72,7 +72,6 @@ public class App extends JFrame {
 	
 	public void changeView(String viewName) {		
 		CardLayout cl = (CardLayout) contentPane.getLayout();
-		if(viewName.equals("Achievements")) this.achievements.fillTable();
 		cl.show(contentPane, viewName);
 	}
 	

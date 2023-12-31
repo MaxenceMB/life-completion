@@ -1,6 +1,7 @@
 package objects;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import ihm.Constants;
 
@@ -224,5 +225,54 @@ public class Achievement {
 				           (this.completed) ? "Completed (" + this.completeDate.format(Constants.showDateFormat) + ")" : "Not completed", 
 						   this.createDate.format(Constants.showDateFormat));
 	}
-
+	
+	
+	///// COMPARATORS \\\\\\
+	public static Comparator<Achievement> newerOnTopComparator() {
+		return new Comparator<Achievement>() {
+			@Override
+			public int compare(Achievement a1, Achievement a2) {
+				return -a1.getCreatedDate().compareTo(a2.getCreatedDate());
+			}
+		};
+	}
+	
+	public static Comparator<Achievement> completedOnTopComparator() {
+		return new Comparator<Achievement>() {
+			@Override
+			public int compare(Achievement a1, Achievement a2) {
+				if(a1.isCompleted() && !a2.isCompleted()) {
+					return -1;
+				} else if(!a1.isCompleted() && a2.isCompleted()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		};
+	}
+	
+	public static Comparator<Achievement> binaryOnTopComparator() {
+		return new Comparator<Achievement>() {
+			@Override
+			public int compare(Achievement a1, Achievement a2) {
+				if(a1.getType().equals(AchievementType.BINARY) && !a2.getType().equals(AchievementType.BINARY)) {
+					return -1;
+				} else if(!a1.getType().equals(AchievementType.BINARY) && a2.getType().equals(AchievementType.BINARY)) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		};
+	}
+	
+	public static Comparator<Achievement> harderOnTopComparator() {
+		return new Comparator<Achievement>() {
+			@Override
+			public int compare(Achievement a1, Achievement a2) {
+				return a2.getLevel().ordinal() - a1.getLevel().ordinal();
+			}
+		};
+	}
 }

@@ -59,7 +59,7 @@ public class NewAchievementController implements ActionListener {
 														(type.getSelectedItem().equals("BINARY")) ? 0 : (int)steps.getValue());
 						
 						new AchievementJDBC().add(a);
-						this.view.getPopup().setSuccess("Achievement " + a.getId() + "has been created !");
+						this.view.getPopup().setSuccess("Achievement " + a.getId() + " has been created !");
 					}
 					break;
 			}
