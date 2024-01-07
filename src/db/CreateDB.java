@@ -21,6 +21,7 @@ public class CreateDB {
 		try {
 			Statement stmt = con.createStatement();
 			
+			/*
 			// Table Achievement
 			stmt.executeUpdate("CREATE TABLE Achievement ("
 							 + "idAchievement TEXT UNIQUE PRIMARY KEY, "
@@ -34,6 +35,15 @@ public class CreateDB {
 							 + "stepsNeeded INTEGER DEFAULT 0, "
 							 + "stepsDone INTEGER DEFAULT 0);");
 			System.out.println("   OK - Create Table Achievement");
+			*/
+			
+			// Table Week
+			stmt.executeUpdate("CREATE TABLE Week ("
+					 		 + "idWeek TEXT UNIQUE PRIMARY KEY, "
+					 		 + "date TEXT NOT NULL, "
+					 		 + "text TEXT UNIQUE NOT NULL, "
+					 		 + "grade REAL DEFAULT 0);");
+	System.out.println("   OK - Create Table Week");
 			
 		} catch (SQLException e) {
 			System.out.println("CREATE TABLES ERROR");
@@ -48,8 +58,14 @@ public class CreateDB {
 			Statement stmt = con.createStatement();
 			
 			// Table achievement
+			/*
 			stmt.executeUpdate("DROP TABLE Achievement;");
 			System.out.println("   OK - Drop Table Achievement");
+			*/
+			
+			// Table week
+			stmt.executeUpdate("DROP TABLE Week;");
+			System.out.println("   OK - Drop Table Week");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

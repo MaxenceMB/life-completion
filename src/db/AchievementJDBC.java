@@ -143,9 +143,9 @@ public class AchievementJDBC implements AchievementDAO {
 	public boolean delete(Achievement a) {
 		boolean res = false;
 		try {
-			String updateAchievement = "DELETE FROM Achievement WHERE idAchievement = ?";
+			String deleteAchievement = "DELETE FROM Achievement WHERE idAchievement = ?";
 			
-			PreparedStatement st  = ConnectDB.getConnection().prepareStatement(updateAchievement);
+			PreparedStatement st  = ConnectDB.getConnection().prepareStatement(deleteAchievement);
 			st.setString(1, a.getId());
 			
 			st.executeUpdate();
