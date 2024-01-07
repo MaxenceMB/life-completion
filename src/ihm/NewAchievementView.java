@@ -1,6 +1,7 @@
 package ihm;
 
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -24,6 +25,7 @@ import java.awt.Font;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 
@@ -85,16 +87,21 @@ public class NewAchievementView extends JPanel {
 		panelTitle.add(nameField);
 		
 		
-		// Panel Desc + Type & Level 
-		JPanel panelDescTypeLevel = new JPanel();
-		panelDescTypeLevel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		panelDescTypeLevel.setLayout(new BorderLayout(0, 10));
-		panelInfos.add(panelDescTypeLevel, BorderLayout.CENTER);
+		// Panel Desc + Type, Level & image drop
+		JPanel panelDescTypeLevelImage = new JPanel();
+		panelDescTypeLevelImage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelDescTypeLevelImage.setLayout(new BorderLayout(0, 10));
+		panelInfos.add(panelDescTypeLevelImage, BorderLayout.CENTER);
+		
+		// Panel desc + image drop
+		JPanel panelDescImage = new JPanel();
+		panelDescImage.setLayout(new BorderLayout(10, 10));
+		panelDescTypeLevelImage.add(panelDescImage, BorderLayout.CENTER);
 		
 		// Panel desc
 		JPanel panelDesc = new JPanel();
 		panelDesc.setLayout(new BorderLayout(0, 10));
-		panelDescTypeLevel.add(panelDesc, BorderLayout.CENTER);
+		panelDescImage.add(panelDesc, BorderLayout.CENTER);
 		
 		JLabel descLabel = new JLabel("Description");
 		descLabel.setFont(Constants.FONT_INPUT_LABEL);
@@ -109,11 +116,26 @@ public class NewAchievementView extends JPanel {
 		panelDesc.add(descField, BorderLayout.CENTER);
 		
 		
+		// Panel Drop image
+		JPanel panelImage = new JPanel();
+		panelImage.setLayout(new BorderLayout(0, 10));
+		panelImage.setPreferredSize(new Dimension(300, getPreferredSize().height));
+		panelDescImage.add(panelImage, BorderLayout.EAST);
+
+		JLabel imageLabel = new JLabel("Image");
+		imageLabel.setFont(Constants.FONT_INPUT_LABEL);
+		imageLabel.setBorder(new MatteBorder(0, 0, 2, 0, Color.BLACK));
+		panelImage.add(imageLabel, BorderLayout.NORTH);
+		
+		JLabel dropSpace = new JLabel("Click or Drop here");
+		dropSpace.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createDashedBorder(Color.BLACK, 2, 5, 5, true)));
+		panelImage.add(dropSpace);
+		
 		// Panel type & level
 		JPanel panelTypeLevel = new JPanel();
 		panelTypeLevel.setBorder(new EmptyBorder(10, 0, 10, 0));
-		panelDescTypeLevel.add(panelTypeLevel, BorderLayout.SOUTH);
 		panelTypeLevel.setLayout(new GridLayout(2, 2, 10, 10));
+		panelDescTypeLevelImage.add(panelTypeLevel, BorderLayout.SOUTH);
 
 		JLabel levelLabel = new JLabel("Level");
 		levelLabel.setFont(Constants.FONT_INPUT_LABEL);
@@ -230,6 +252,22 @@ public class NewAchievementView extends JPanel {
 	// gives the popup panel
 	public Popup getPopup() {
 		return this.popup;
+	}
+
+
+	public void clear() {
+		nameField.setText("");
+		descField.setText("");
+		
+		levelField.setSelectedIndex(0);
+		typeField.setSelectedIndex(0);
+		
+		stepsField.setValue(0);
+		
+		stepsField.setEnabled(false);
+		setStepsPanelActive(false);
+		
+		this.popup.setVisible(false);
 	}
 
 }

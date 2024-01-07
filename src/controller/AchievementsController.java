@@ -45,7 +45,7 @@ public class AchievementsController implements ActionListener {
 			}
 			
 			// Sorts
-			if(btnName.substring(btnName.length()-5).equals("Order")) {
+			if(btnName.length() > 6 && btnName.substring(btnName.length()-5).equals("Order")) {
 				if(!b.getBackground().equals(Color.LIGHT_GRAY)) {
 					for(JButton bs : this.view.getSortButtons()) {
 						bs.setBackground(Color.WHITE);
@@ -105,6 +105,7 @@ public class AchievementsController implements ActionListener {
 						break;
 						
 					case "Delete":
+						this.view.getList().remove(jdbc.getById(id).get());
 						jdbc.delete(jdbc.getById(id).get());
 						this.view.fillTable();
 						break;

@@ -15,6 +15,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import components.ListLayout;
 import controller.AchievementsController;
@@ -29,7 +30,7 @@ public class AchievementsView extends JPanel {
 	private JPanel listAchievements;
 	private JButton[] sortButtons = new JButton[4];
 	
-	private List<Achievement> list;
+	public List<Achievement> list;
 
 	public AchievementsView() {
 
@@ -133,23 +134,24 @@ public class AchievementsView extends JPanel {
 	
 	private JPanel achievementPanel(Achievement a) {
 		
+		Color borderColor = Color.WHITE;
+	     	  if(a.getLevel().equals(AchievementLevel.BRONZE)) borderColor = new Color(205, 127,  50);
+	     else if(a.getLevel().equals(AchievementLevel.SILVER)) borderColor = new Color(210, 210, 210);
+	     else if(a.getLevel().equals(AchievementLevel.GOLD))   borderColor = new Color(255, 215,   0);
+		
 		// THE Panel
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout(5, 0));  
+		panel.setPreferredSize(new Dimension(panel.getPreferredSize().width, 100));
 		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0, borderColor));
 		
 		// Achievement image on left
-		Color borderColor = Color.WHITE;
-		     if(a.getLevel().equals(AchievementLevel.BRONZE)) borderColor = new Color(205, 127,  50);
-		else if(a.getLevel().equals(AchievementLevel.SILVER)) borderColor = new Color(210, 210, 210);
-		else if(a.getLevel().equals(AchievementLevel.GOLD))   borderColor = new Color(255, 215,   0);
-		
 		JLabel image = new JLabel("IMG");
 		image.setHorizontalAlignment(SwingConstants.CENTER);
-		image.setPreferredSize(new Dimension(90, 80));
+		image.setPreferredSize(new Dimension(100, 100));
 		image.setOpaque(true);
 		image.setBackground(Color.GRAY);
-		image.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0, borderColor));
 		panel.add(image, BorderLayout.WEST);
 		
 		// Main panel in the center
@@ -172,8 +174,14 @@ public class AchievementsView extends JPanel {
 		panelInfos.add(title);
 					
 		// Achievement title
-		JLabel description = new JLabel(a.getDescription());
+		JTextArea description = new JTextArea(a.getDescription());
 		description.setFont(Constants.FONT_ACHIEVEMENT_DESC);
+		description.setLineWrap(true);
+		description.setWrapStyleWord(true);
+		description.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		description.setOpaque(false);
+		description.setEditable(false);
+		description.setFocusable(false);
 		panelInfos.add(description);
 				
 		// Panel Dates

@@ -38,8 +38,9 @@ public class NewAchievementController implements ActionListener {
 			
 			switch(b.getName()) {
 				case "Back":
+					this.view.clear();
 					app.changeView(app.getLastView());
-					if(app.getLastView().equals("Achievements")) 
+					if(app.getLastView().equals("Achievements")) this.app.getAchievementsView().fillTable();
 					app.setLastView(this.view.getName());
 					break;
 					
@@ -59,7 +60,9 @@ public class NewAchievementController implements ActionListener {
 														(type.getSelectedItem().equals("BINARY")) ? 0 : (int)steps.getValue());
 						
 						new AchievementJDBC().add(a);
+						this.view.clear();
 						this.view.getPopup().setSuccess("Achievement " + a.getId() + " has been created !");
+						this.app.getAchievementsView().getList().add(0, a);
 					}
 					break;
 			}
