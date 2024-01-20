@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+import ihm.Constants;
+
 public class Week {
 	
 	///// ATTRIBUTES \\\\\		
@@ -36,11 +38,15 @@ public class Week {
 	
 	///// FUNCTIONS \\\\\\
 	public Color getColor() {
-		int red   = Math.round((this.grade > 5) ? 150 - 10*(this.grade % 5) : 150);
-		int green = Math.round((this.grade < 5) ? 150 - 10*(this.grade % 5) : 150);
+		int red   = (grade > 5) ? Constants.clamp(Math.pow(2, 10-(grade-3.5f)), 10, 200) : 200;
+		int green = (grade < 5) ? Constants.clamp(Math.pow(2, grade+3), 10, 200) : 200;
 		int blue  = 50;
 		
 		return new Color(red, green, blue);
+	}
+	
+	public int getNumber() {
+		return Integer.valueOf(this.id.substring(6));
 	}
 	
 	

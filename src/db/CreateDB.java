@@ -9,8 +9,8 @@ public class CreateDB {
 	public static void main(String[] args) {
 		Connection con = ConnectDB.getConnection();
 		
-		dropTables(con);
-		createTables(con);
+		//dropTables(con);
+		//createTables(con);
 		
 		ConnectDB.closeConnection();
 	}
@@ -21,7 +21,7 @@ public class CreateDB {
 		try {
 			Statement stmt = con.createStatement();
 			
-			/*
+			
 			// Table Achievement
 			stmt.executeUpdate("CREATE TABLE Achievement ("
 							 + "idAchievement TEXT UNIQUE PRIMARY KEY, "
@@ -35,7 +35,7 @@ public class CreateDB {
 							 + "stepsNeeded INTEGER DEFAULT 0, "
 							 + "stepsDone INTEGER DEFAULT 0);");
 			System.out.println("   OK - Create Table Achievement");
-			*/
+			
 			
 			// Table Week
 			stmt.executeUpdate("CREATE TABLE Week ("

@@ -19,6 +19,9 @@ public class Constants {
 	public static final Color COLOR_POPUP        = new Color( 50,  50, 200);
 	public static final Color COLOR_POPUP_BACK   = new Color(200, 200, 255);
 	
+	public static final Color COLOR_BLACK = new Color(  0,   0,   0);
+	public static final Color COLOR_BLANK = new Color(200, 200, 200);
+	
 	// Fonts
 	public static final Font FONT_ACHIEVEMENT_NAME = new Font("Arial Nova Light", Font.BOLD,  20);
 	public static final Font FONT_ACHIEVEMENT_DESC = new Font("Arial Nova Light", Font.PLAIN, 16);
@@ -27,6 +30,7 @@ public class Constants {
 	public static final Font FONT_INPUT_TEXT  = new Font("Arial",      Font.PLAIN, 20);
 	public static final Font FONT_BUTTON      = new Font("Arial",      Font.PLAIN, 20);
 	public static final Font FONT_POPUP       = new Font("Arial",      Font.PLAIN, 17);
+	public static final Font FONT_MENU_TITLE  = new Font("Arial",      Font.PLAIN, 25);
 	
 	// Screen infos
 	public static int SCREEN_WIDTH;
@@ -43,6 +47,10 @@ public class Constants {
 		
 		SCREEN_X = (int)size.getWidth()/2 - 1280/2; 
 		SCREEN_Y = (int)size.getHeight()/2 - 720/2; 
+	}
+	
+	public static int clamp(double value, double min, double max) {
+		return (int)Math.max(min, Math.min(max, value));
 	}
 	
 }
